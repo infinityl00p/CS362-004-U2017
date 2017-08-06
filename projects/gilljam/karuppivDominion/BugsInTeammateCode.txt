@@ -1,0 +1,116 @@
+CS 362 Assignment 5 - BugsInTeammateCode
+
+<><><><><><><><>
+Bug Report 1
+<><><><><><><><>
+
+Class: Card Error - High priority low severity
+Date: August.6/2017
+Reported By: James Gill
+Email: gilljam@oregonstate.edu
+
+
+Product: Karuppiv Dominion Code Version: 1.0
+Platform: Mac OSX               Version: 10.11.6
+
+Is it reproducible: Yes
+
+Description
+===========
+Smithy Card - Adds an extra card from the deck to the hand.
+
+
+Steps to Produce/Reproduce
+--------------------------
+1. From current directory, navigate to "/projects/gilljam/karuppivDominion"
+2. In command line, enter "make all"
+3. In command line, enter "./cardtest1"
+4. View results
+
+Output
+-------
+************** Testing Card: smithy ***************
+handcount = 8, expected = 7
+deckCount = 1, expected = 2
+
+Expected Results
+----------------
+handCount = 7
+deckCount = 2
+
+
+Actual Results
+--------------
+handCount = 8
+deckCount = 1
+
+
+Workarounds
+-----------
+In line 33 of cardtest1.c, change "testState.handCount[player1]" to "testState.handCount[player1]-1"
+In line 35 of cardtest1.c change "testState.deckCount[player1]" to "testState.deckCount[player1]+1"
+
+Fix
+----
+In dominion.c code, line 707. Change "for (i = 0; i <= 3; i++) {" to "	for (i = 0; i < 3; i++) {"
+
+
+
+
+
+
+
+<><><><><><><><>
+Bug Report 2
+<><><><><><><><>
+
+Class: Card Error - High priority low severity
+Date: August.6/2017
+Reported By: James Gill
+Email: gilljam@oregonstate.edu
+
+
+Product: Karuppiv Dominion      Version: 1.0
+Platform: Mac OSX               Version: 10.11.6
+
+Is it reproducible: Yes
+
+Description
+===========
+Village Card - number of actions has 10 extra actions
+
+
+Steps to Produce/Reproduce
+--------------------------
+1. From current directory, navigate to "/projects/gilljam/karuppivDominion"
+2. In command line, enter "make all"
+3. In command line, enter "./cardtest3"
+4. View results
+
+Output
+------
+************** Testing Card: village ***************
+handcount = 5, expected = 5
+deckCount = 4, expected = 4
+numActions = 13, expected = 3
+
+Expected Results
+----------------
+handCount = 5
+deckCount = 4
+numActions = 3
+
+Actual Results
+--------------
+handCount = 5
+deckCount = 4
+numActions = 14
+
+
+Workarounds
+-----------
+In line 35, change "testState.numActions" to "testState.numActions-10" to produce correct output
+
+Fix
+---
+In dominion.c code, line 739, "	state->numActions = state->numActions + 12" should be "	state->numActions = state->numActions + 2"
